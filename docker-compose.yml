@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: neurorush_app
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=neurorush_secret_pw
+      - DB_NAME=neurorush
+      - JWT_SECRET=neurorush_super_secret_jwt_key_production
+      - JWT_EXPIRES_IN=24h
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: neurorush_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: neurorush_secret_pw
+      MYSQL_DATABASE: neurorush
+    ports:
+      - "3307:3306"
+    volumes:
+      - neurorush_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pneurorush_secret_pw"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  neurorush_data:

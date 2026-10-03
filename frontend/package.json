@@ -1,0 +1,8 @@
+{
+  "name": "neurorush-frontend",
+  "version": "1.0.0",
+  "description": "NeuroRush Frontend Single Page Application",
+  "scripts": {
+    "build": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); ['index.html','styles.css','app.js'].forEach(f=>{if(fs.existsSync(f)) fs.copyFileSync(f, 'dist/'+f)}); console.log('Build complete: files copied to dist/');\""
+  }
+}
