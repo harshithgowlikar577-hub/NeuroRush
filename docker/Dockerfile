@@ -4,13 +4,13 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy dependency files
-COPY backend/package*.json ./
+COPY package*.json ./
 
 # Install production dependencies
 RUN npm ci --omit=dev
 
-# Copy application backend and public assets
-COPY backend/ ./
+# Copy application files
+COPY . ./
 
 # Expose server port
 EXPOSE 5000
@@ -20,4 +20,4 @@ ENV NODE_ENV=production
 ENV PORT=5000
 
 # Start server
-CMD ["node", "server.js"]
+CMD ["node", "backend/server.js"]

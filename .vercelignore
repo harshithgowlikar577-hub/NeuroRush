@@ -1,0 +1,7 @@
+# Ignore container artifacts and configurations on Vercel
+Dockerfile
+docker/
+docker-compose.yml
+.dockerignore
+database/
+*.sql

@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     container_name: neurorush_app
     restart: always
     ports:
