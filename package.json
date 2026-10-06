@@ -6,9 +6,7 @@
   "scripts": {
     "build": "node -e \"const fs=require('fs'); if(fs.existsSync('frontend')) { fs.cpSync('frontend', 'public', {recursive: true}); }\"",
     "start": "node backend/server.js",
-    "dev": "node backend/server.js",
-    "install:backend": "npm install --prefix backend",
-    "postinstall": "npm install --prefix backend"
+    "dev": "node backend/server.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
