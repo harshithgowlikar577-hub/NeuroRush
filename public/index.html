@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroRush — Cognitive Performance Platform</title>
+    <meta name="description" content="NeuroRush is a cognitive performance testing and analytics platform measuring Memory, Reflex, Attention, and Typing velocity.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar" id="main-nav">
+        <div class="nav-container">
+            <a href="#" class="brand-logo" id="nav-brand" onclick="navigateTo('home')">
+                <span class="brand-badge-nr">NR</span>
+                <span class="brand-text">NEURO<span class="brand-highlight">RUSH</span></span>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links" id="nav-links">
+                <a href="#" class="nav-link active" data-view="home" onclick="navigateTo('home')">Home</a>
+                <a href="#" class="nav-link auth-required" data-view="dashboard" onclick="navigateTo('dashboard')">Dashboard</a>
+                <a href="#" class="nav-link auth-required" data-view="challenges" onclick="navigateTo('challenges')">Challenges</a>
+                <a href="#" class="nav-link auth-required" data-view="analytics" onclick="navigateTo('analytics')">Analytics</a>
+                <a href="#" class="nav-link auth-required" data-view="leaderboard" onclick="navigateTo('leaderboard')">Leaderboards</a>
+                <a href="#" class="nav-link auth-required" data-view="profile" onclick="navigateTo('profile')">Profile</a>
+                
+                <div class="nav-auth-slot" id="nav-auth-slot">
+                    <button class="btn btn-outline btn-sm" id="btn-login-nav" onclick="navigateTo('auth')">Sign In</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Application Container -->
+    <main class="main-content" id="app-root">
+        
+        <!-- ================= HOME VIEW ================= -->
+        <section class="view-section active" id="view-home">
+            <div class="hero-banner">
+                <div class="hero-badge">NEURORUSH COGNITIVE ARCHITECTURE</div>
+                <h1 class="hero-title">Train Faster. Think Sharper. <span class="gradient-text">Perform Better.</span></h1>
+                <p class="hero-subtitle">
+                    NeuroRush transforms cognitive training into measurable performance growth. Rigorous empirical performance telemetry across memory, motor reflex, selective attention, and typing velocity.
+                </p>
+                <div class="hero-tagline-pills">
+                    <span class="tagline-pill">Every Second Counts. Every Decision Matters.</span>
+                    <span class="tagline-pill">Challenge Your Brain. Unlock Your Potential.</span>
+                    <span class="tagline-pill">Built for Focus. Designed for Growth.</span>
+                </div>
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-lg" id="btn-hero-start" onclick="handleStartSession()">Start Training ⚡</button>
+                    <button class="btn btn-secondary btn-lg" onclick="navigateTo('dashboard')">View Dashboard →</button>
+                </div>
+            </div>
+
+            <!-- Four Cognitive Pillars -->
+            <div class="pillars-grid">
+                <div class="pillar-card" onclick="handleDirectChallenge('memory')">
+                    <div class="pillar-header">
+                        <div class="pillar-icon">🧠</div>
+                        <span class="pillar-tag">Visual Recall</span>
+                    </div>
+                    <h3>Pattern Memory</h3>
+                    <p>Memorize and recall multi-color sequences with adaptive length under time pressure.</p>
+                    <div class="pillar-action">Train Domain →</div>
+                </div>
+                <div class="pillar-card" onclick="handleDirectChallenge('reflex')">
+                    <div class="pillar-header">
+                        <div class="pillar-icon">⚡</div>
+                        <span class="pillar-tag">Latency Timing</span>
+                    </div>
+                    <h3>Reflex Speed</h3>
+                    <p>Measure pure motor response time in milliseconds with anti-premature click protection.</p>
+                    <div class="pillar-action">Train Domain →</div>
+                </div>
+                <div class="pillar-card" onclick="handleDirectChallenge('attention')">
+                    <div class="pillar-header">
+                        <div class="pillar-icon">🎯</div>
+                        <span class="pillar-tag">Vigilance</span>
+                    </div>
+                    <h3>Selective Attention</h3>
+                    <p>Locate target visual stimuli hidden within dense distractor matrices.</p>
+                    <div class="pillar-action">Train Domain →</div>
+                </div>
+                <div class="pillar-card" onclick="handleDirectChallenge('typing')">
+                    <div class="pillar-header">
+                        <div class="pillar-icon">⌨️</div>
+                        <span class="pillar-tag">Motor Control</span>
+                    </div>
+                    <h3>Typing Precision</h3>
+                    <p>Track Net Words Per Minute and character-level accuracy on scaled textual paragraphs.</p>
+                    <div class="pillar-action">Train Domain →</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= DASHBOARD VIEW ================= -->
+        <section class="view-section" id="view-dashboard">
+            <div class="section-header">
+                <div>
+                    <h2>Cognitive Dashboard</h2>
+                    <p class="section-subtitle">Real-time aggregated performance metrics and session timeline.</p>
+                </div>
+                <button class="btn btn-primary" onclick="handleStartSession()">Launch Session ⚡</button>
+            </div>
+
+            <!-- Stats Highlight Grid -->
+            <div class="stats-grid" id="dashboard-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Sessions</span>
+                        <span class="stat-icon">📊</span>
+                    </div>
+                    <div class="stat-value" id="dash-total-sessions">-</div>
+                    <div class="stat-sub">Completed test runs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Best Overall Score</span>
+                        <span class="stat-icon">🏆</span>
+                    </div>
+                    <div class="stat-value gradient-text" id="dash-best-score">-</div>
+                    <div class="stat-sub">Personal all-time record</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Average Score</span>
+                        <span class="stat-icon">📈</span>
+                    </div>
+                    <div class="stat-value" id="dash-avg-score">-</div>
+                    <div class="stat-sub">Mean composite performance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Global Rank</span>
+                        <span class="stat-icon">🌐</span>
+                    </div>
+                    <div class="stat-value" id="dash-global-rank">-</div>
+                    <div class="stat-sub">Leaderboard standing</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Visualization: SVG Domain Radar / Comparison Matrix -->
+            <div class="dashboard-panel mb-4" id="dash-chart-panel">
+                <div class="chart-panel-header">
+                    <div>
+                        <h3>Cognitive Domain Comparison</h3>
+                        <p class="section-subtitle">Comparative balance across Memory, Reflex, Attention, and Typing.</p>
+                    </div>
+                    <div class="chart-legend">
+                        <span class="legend-item"><span class="legend-dot dot-memory"></span>Memory</span>
+                        <span class="legend-item"><span class="legend-dot dot-reflex"></span>Reflex</span>
+                        <span class="legend-item"><span class="legend-dot dot-attention"></span>Attention</span>
+                        <span class="legend-item"><span class="legend-dot dot-typing"></span>Typing</span>
+                    </div>
+                </div>
+                <div class="chart-visual-wrapper" id="dash-visual-chart">
+                    <!-- Pure SVG rendered via app.js -->
+                </div>
+            </div>
+
+            <!-- Strengths and Difficulties -->
+            <div class="two-col-grid">
+                <div class="dashboard-panel">
+                    <h3>Cognitive Strengths</h3>
+                    <div class="skill-highlight-box">
+                        <div class="highlight-item">
+                            <span class="highlight-tag tag-best">STRONGEST DOMAIN</span>
+                            <span class="highlight-name" id="dash-best-skill">Evaluating...</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-tag tag-weak">GROWTH FOCUS</span>
+                            <span class="highlight-name" id="dash-weak-skill">Evaluating...</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="mt-4">Current Progression Levels</h3>
+                    <div class="progression-bars" id="dash-progression-bars">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <div class="dashboard-panel">
+                    <h3>Current Adaptive Difficulty</h3>
+                    <div class="difficulty-display-grid" id="dash-difficulty-grid">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <h3 class="mt-4">Recent Sessions</h3>
+                    <div class="recent-sessions-list" id="dash-recent-sessions">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CHALLENGES VIEW ================= -->
+        <section class="view-section" id="view-challenges">
+            <div class="section-header">
+                <div>
+                    <h2>Cognitive Challenges</h2>
+                    <p class="section-subtitle">Select a cognitive domain to train and advance your skill level.</p>
+                </div>
+            </div>
+
+            <!-- Challenge Selector Hub -->
+            <div class="challenge-tabs" id="challenge-tabs">
+                <button class="tab-btn active" data-challenge="memory" onclick="switchChallengeTab('memory')">🧠 Memory</button>
+                <button class="tab-btn" data-challenge="reflex" onclick="switchChallengeTab('reflex')">⚡ Reflex</button>
+                <button class="tab-btn" data-challenge="attention" onclick="switchChallengeTab('attention')">🎯 Attention</button>
+                <button class="tab-btn" data-challenge="typing" onclick="switchChallengeTab('typing')">⌨️ Typing</button>
+            </div>
+
+            <!-- Challenge Canvas Container -->
+            <div class="challenge-canvas-card" id="challenge-canvas-card">
+                
+                <!-- MEMORY CHALLENGE -->
+                <div class="challenge-container active" id="canvas-memory">
+                    <div class="challenge-meta">
+                        <span class="badge" id="memory-difficulty-badge">DIFFICULTY: MEDIUM</span>
+                        <span class="badge badge-info" id="memory-timer-badge">Display: 3.0s</span>
+                        <button class="btn btn-outline-danger btn-xs btn-exit-chal hidden" id="btn-exit-memory" onclick="confirmExitChallenge()">Exit Challenge ✕</button>
+                    </div>
+                    <div class="challenge-instruction" id="memory-instruction">
+                        Memorize the color sequence shown, then re-enter the pattern in the exact order.
+                    </div>
+                    
+                    <!-- Pattern Display Box -->
+                    <div class="pattern-display-area" id="memory-pattern-area">
+                        <div class="pattern-placeholder">Click 'Start New Challenge' below to begin pattern sequence.</div>
+                    </div>
+
+                    <!-- Input Controls Area -->
+                    <div class="pattern-inputs-area hidden" id="memory-input-area">
+                        <p class="input-prompt">Click the colors in the exact sequence you memorized:</p>
+                        <div class="palette-buttons-row" id="memory-palette-buttons"></div>
+                        <div class="user-sequence-preview" id="memory-sequence-preview"></div>
+                        
+                        <!-- Standardized Memory Button Grid -->
+                        <div class="memory-action-grid mt-3">
+                            <button class="btn btn-secondary" id="btn-memory-undo" onclick="undoLastMemorySelection()">Undo Last Selection ⌫</button>
+                            <button class="btn btn-secondary" id="btn-memory-clear" onclick="resetMemoryInput()">Clear All ↺</button>
+                            <button class="btn btn-primary" id="btn-memory-submit" onclick="submitMemoryAnswer()">Submit Recall ✓</button>
+                        </div>
+                    </div>
+
+                    <div class="canvas-footer" id="memory-footer">
+                        <button class="btn btn-primary btn-lg" id="btn-memory-start" onclick="startMemoryChallenge()">Start New Challenge ⚡</button>
+                        <button class="btn btn-outline-danger btn-sm" id="btn-reset-memory" onclick="confirmResetIndividualSkill('MEMORY')">Reset Memory Level ⚠️</button>
+                    </div>
+                </div>
+
+                <!-- REFLEX CHALLENGE -->
+                <div class="challenge-container hidden" id="canvas-reflex">
+                    <div class="challenge-meta">
+                        <span class="badge" id="reflex-difficulty-badge">DIFFICULTY: MEDIUM</span>
+                        <span class="badge badge-info" id="reflex-timeout-badge">Window: 5000ms</span>
+                        <button class="btn btn-outline-danger btn-xs btn-exit-chal hidden" id="btn-exit-reflex" onclick="confirmExitChallenge()">Exit Challenge ✕</button>
+                    </div>
+                    <div class="challenge-instruction">
+                        Click 'Arm Trigger', wait through the random delay (2-5 seconds), and click the box as fast as possible when it turns GREEN! Clicking early results in a penalty.
+                    </div>
+                    <div class="reflex-trigger-box state-idle" id="reflex-trigger-box" onclick="handleReflexBoxClick()">
+                        <div class="trigger-label" id="reflex-trigger-text">CLICK 'ARM TRIGGER' BELOW</div>
+                    </div>
+                    <div class="canvas-footer">
+                        <button class="btn btn-primary btn-lg" id="btn-reflex-arm" onclick="armReflexTrigger()">Arm Trigger</button>
+                        <button class="btn btn-outline-danger btn-sm" id="btn-reset-reflex" onclick="confirmResetIndividualSkill('REFLEX')">Reset Reflex Level ⚠️</button>
+                    </div>
+                </div>
+
+                <!-- ATTENTION CHALLENGE -->
+                <div class="challenge-container hidden" id="canvas-attention">
+                    <div class="challenge-meta">
+                        <span class="badge" id="attention-difficulty-badge">DIFFICULTY: MEDIUM</span>
+                        <span class="badge badge-info" id="attention-dim-badge">Grid: 5x5</span>
+                        <button class="btn btn-outline-danger btn-xs btn-exit-chal hidden" id="btn-exit-attention" onclick="confirmExitChallenge()">Exit Challenge ✕</button>
+                    </div>
+                    <div class="challenge-instruction" id="attention-instruction-text">
+                        Click 'Start Challenge' to generate the distractor matrix and find the hidden target.
+                    </div>
+                    <div class="attention-target-hint hidden" id="attention-target-hint">
+                        Target Stimulus: <span class="target-symbol-chip" id="attention-target-chip">?</span>
+                    </div>
+                    <div class="attention-grid-wrapper" id="attention-grid-wrapper">
+                        <div class="pattern-placeholder">Matrix will appear here when initialized.</div>
+                    </div>
+                    <div class="canvas-footer">
+                        <button class="btn btn-primary btn-lg" id="btn-attention-start" onclick="startAttentionChallenge()">Start Attention Challenge</button>
+                        <button class="btn btn-outline-danger btn-sm" id="btn-reset-attention" onclick="confirmResetIndividualSkill('ATTENTION')">Reset Attention Level ⚠️</button>
+                    </div>
+                </div>
+
+                <!-- TYPING CHALLENGE -->
+                <div class="challenge-container hidden" id="canvas-typing">
+                    <div class="challenge-meta">
+                        <span class="badge" id="typing-difficulty-badge">DIFFICULTY: MEDIUM</span>
+                        <span class="badge badge-info" id="typing-stats-live">WPM: 0 | Accuracy: 100%</span>
+                        <button class="btn btn-outline-danger btn-xs btn-exit-chal hidden" id="btn-exit-typing" onclick="confirmExitChallenge()">Exit Challenge ✕</button>
+                    </div>
+                    <div class="challenge-instruction">
+                        Type the displayed passage with maximum speed and precision. Timer starts on your first keystroke.
+                    </div>
+                    <div class="typing-passage-box" id="typing-target-passage">
+                        Click 'Generate Passage' to receive your typing prompt.
+                    </div>
+                    <div class="typing-input-wrapper">
+                        <textarea class="typing-textarea" id="typing-textarea" placeholder="Start typing the passage here..." disabled oninput="handleTypingInput()"></textarea>
+                    </div>
+                    <div class="canvas-footer">
+                        <button class="btn btn-primary btn-lg" id="btn-typing-start" onclick="startTypingChallenge()">Generate Passage</button>
+                        <button class="btn btn-secondary btn-lg hidden" id="btn-typing-submit" onclick="submitTypingChallenge()">Submit Typing</button>
+                        <button class="btn btn-outline btn-lg hidden" id="btn-typing-reset" onclick="resetTypingChallenge()">Reset Current ↺</button>
+                        <button class="btn btn-outline-danger btn-sm" id="btn-reset-typing" onclick="confirmResetIndividualSkill('TYPING')">Reset Typing Level ⚠️</button>
+                    </div>
+                </div>
+
+                <!-- RESULTS OVERLAY MODAL -->
+                <div class="result-modal hidden" id="challenge-result-modal">
+                    <div class="modal-card">
+                        <div class="modal-header-badge">
+                            <span class="modal-badge" id="result-badge">CHALLENGE COMPLETE</span>
+                        </div>
+                        <h2 class="modal-score" id="result-score">0</h2>
+                        <div class="score-breakdown-grid" id="result-breakdown">
+                            <!-- Injected by JS -->
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" id="btn-result-replay" onclick="handleReplayCurrentChallenge()">Replay Challenge ↺</button>
+                            <button class="btn btn-primary" onclick="closeResultModal()">Continue →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REUSABLE CONFIRMATION MODAL (EXIT CHALLENGE & RESETS) -->
+                <div class="result-modal hidden" id="app-confirm-modal">
+                    <div class="modal-card" style="max-width: 440px; text-align: center;">
+                        <div class="modal-header-badge">
+                            <span class="modal-badge" id="confirm-modal-badge" style="background:#FEE2E2; color:#DC2626;">CONFIRM ACTION</span>
+                        </div>
+                        <h3 id="confirm-modal-title" style="margin-top: 1rem; font-size: 1.25rem;">Are you sure?</h3>
+                        <p class="text-muted mt-2" id="confirm-modal-message" style="font-size: 0.95rem;">Please confirm your action.</p>
+                        <div class="modal-footer mt-4" style="display:flex; justify-content:center; gap:0.75rem;">
+                            <button class="btn btn-secondary" id="btn-confirm-cancel">Cancel</button>
+                            <button class="btn btn-primary" id="btn-confirm-accept" style="background:#EF4444; border-color:#EF4444;">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ANALYTICS VIEW ================= -->
+        <section class="view-section" id="view-analytics">
+            <div class="section-header">
+                <div>
+                    <h2>Performance Analytics</h2>
+                    <p class="section-subtitle">Pure database-driven metrics, domain comparisons, and historical telemetry.</p>
+                </div>
+            </div>
+
+            <!-- Domain Performance Breakdown Cards -->
+            <div class="analytics-cards-grid" id="analytics-skills-grid">
+                <!-- Dynamically populated by JS for Memory, Reflex, Attention, Typing -->
+            </div>
+
+            <!-- Personal Records Showcase -->
+            <div class="dashboard-panel mt-4">
+                <h3>Personal Best Records</h3>
+                <div class="records-grid" id="analytics-records-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Score History Telemetry Table -->
+            <div class="dashboard-panel mt-4">
+                <h3>Historical Sessions Telemetry</h3>
+                <div class="table-responsive">
+                    <table class="data-table" id="analytics-history-table">
+                        <thead>
+                            <tr>
+                                <th>Session Date</th>
+                                <th>Session ID</th>
+                                <th>Overall Score</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analytics-history-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= LEADERBOARD VIEW ================= -->
+        <section class="view-section" id="view-leaderboard">
+            <div class="section-header">
+                <div>
+                    <h2>Global Rankings & Standings</h2>
+                    <p class="section-subtitle">Real-time competitive standings calculated with strict deterministic tie-breaking.</p>
+                </div>
+            </div>
+
+            <!-- Leaderboard Category Tabs -->
+            <div class="challenge-tabs" id="leaderboard-tabs">
+                <button class="tab-btn active" data-lb="global" onclick="switchLeaderboardTab('global')">🌐 Global Overall</button>
+                <button class="tab-btn" data-lb="memory" onclick="switchLeaderboardTab('memory')">🧠 Memory</button>
+                <button class="tab-btn" data-lb="reflex" onclick="switchLeaderboardTab('reflex')">⚡ Reflex</button>
+                <button class="tab-btn" data-lb="attention" onclick="switchLeaderboardTab('attention')">🎯 Attention</button>
+                <button class="tab-btn" data-lb="typing" onclick="switchLeaderboardTab('typing')">⌨️ Typing</button>
+            </div>
+
+            <div class="dashboard-panel">
+                <div class="table-responsive">
+                    <table class="data-table" id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player</th>
+                                <th>Level</th>
+                                <th>Score</th>
+                                <th>Achieved At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Leaderboard Pagination Controls -->
+                <div class="pagination-bar" id="lb-pagination-bar">
+                    <button class="btn btn-outline btn-sm" id="btn-lb-prev" onclick="changeLeaderboardPage(-1)">← Previous</button>
+                    <span class="pagination-info" id="lb-page-info">Page 1 of 1</span>
+                    <button class="btn btn-outline btn-sm" id="btn-lb-next" onclick="changeLeaderboardPage(1)">Next →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PROFILE VIEW (REDESIGNED WITH ACHIEVEMENTS) ================= -->
+        <section class="view-section" id="view-profile">
+            <div class="section-header">
+                <div>
+                    <h2>Cognitive Profile & Credentials</h2>
+                    <p class="section-subtitle">Authenticated operative credentials, progression levels, and permanent milestone achievements.</p>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="handleLogout()">Sign Out</button>
+            </div>
+
+            <div class="two-col-grid profile-main-grid">
+                <!-- LEFT SIDE: User Information, Statistics, Account Details, Session Summary -->
+                <div class="profile-left-col">
+                    <div class="profile-card">
+                        <div class="profile-avatar">👤</div>
+                        <h3 id="prof-username">Operative</h3>
+                        <p class="text-muted" id="prof-email">user@neurorush.edu</p>
+                        
+                        <div class="profile-meta-list">
+                            <div class="meta-row">
+                                <span>User ID:</span>
+                                <code class="code-badge" id="prof-userid">-</code>
+                            </div>
+                            <div class="meta-row">
+                                <span>Member Since:</span>
+                                <span id="prof-created">-</span>
+                            </div>
+                            <div class="meta-row">
+                                <span>Total Completed Sessions:</span>
+                                <strong id="prof-sessions">-</strong>
+                            </div>
+                            <div class="meta-row">
+                                <span>All-Time Best Score:</span>
+                                <strong class="gradient-text" id="prof-best">-</strong>
+                            </div>
+                            <div class="meta-row">
+                                <span>Average Composite Score:</span>
+                                <span id="prof-avg">-</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-danger-zone mt-4">
+                            <div class="danger-zone-header">
+                                <span class="danger-icon">⚠️</span>
+                                <h4 class="danger-title">Global Reset Option</h4>
+                            </div>
+                            <p class="danger-desc">
+                                Permanently wipe all challenge progress, analytics, statistics, history, scores, and rankings. Restarts your account completely from Level 1.
+                            </p>
+                            <button class="btn btn-outline-danger btn-sm" id="btn-reset-all-challenges" style="width: 100%; font-weight: 700;">
+                                ⚠️ Reset All Challenges
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE: Domain Progression, Achievement Progress, Achievement Cards, Badges -->
+                <div class="profile-right-col">
+                    <div class="dashboard-panel">
+                        <h3>Domain Progression</h3>
+                        <div class="profile-progressions-list mt-3" id="prof-progressions-list">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <div class="panel-header-flex mt-4">
+                            <div>
+                                <h3>Milestone Achievements</h3>
+                                <p class="section-subtitle">Permanent milestones earned through documented cognitive performance.</p>
+                            </div>
+                            <div class="achievement-counter-badge">
+                                <span id="prof-ach-earned-count">0</span> / <span id="prof-ach-total-count">7</span> Unlocked
+                            </div>
+                        </div>
+
+                        <!-- Unlocked Badges Chips -->
+                        <div class="profile-achievements-chips mt-3" id="prof-achievements-chips">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <!-- Full Achievement Cards List inside Profile -->
+                        <div class="achievements-grid mt-4" id="prof-achievements-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Recent Activity Section -->
+            <div class="dashboard-panel mt-4">
+                <h3>Recent Cognitive Activity</h3>
+                <p class="section-subtitle">Verified performance telemetry from your most recent testing runs.</p>
+                <div class="table-responsive mt-3">
+                    <table class="data-table" id="prof-activity-table">
+                        <thead>
+                            <tr>
+                                <th>Session Date</th>
+                                <th>Session ID</th>
+                                <th>Overall Score</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prof-activity-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= AUTH VIEW ================= -->
+        <section class="view-section" id="view-auth">
+            <div class="auth-wrapper">
+                <div class="auth-card">
+                    <div class="auth-tabs">
+                        <button class="auth-tab-btn active" id="tab-login" onclick="switchAuthTab('login')">Sign In</button>
+                        <button class="auth-tab-btn" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+                    </div>
+
+                    <!-- LOGIN FORM -->
+                    <form id="form-login" onsubmit="handleLoginSubmit(event)">
+                        <div class="form-group">
+                            <label for="login-email">Email Address</label>
+                            <input type="email" id="login-email" class="form-input" placeholder="operative@neurorush.edu" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-3" id="btn-login-submit">Authenticate</button>
+                        <div class="form-status" id="login-status"></div>
+                    </form>
+
+                    <!-- REGISTER FORM -->
+                    <form id="form-register" class="hidden" onsubmit="handleRegisterSubmit(event)">
+                        <div class="form-group">
+                            <label for="reg-username">Username</label>
+                            <input type="text" id="reg-username" class="form-input" placeholder="arjun_sharma" minlength="3" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-email">Email Address</label>
+                            <input type="email" id="reg-email" class="form-input" placeholder="arjun@neurorush.edu" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-password">Password (Min 6 Characters)</label>
+                            <input type="password" id="reg-password" class="form-input" placeholder="••••••••" minlength="6" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-3" id="btn-reg-submit">Create Account</button>
+                        <div class="form-status" id="register-status"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

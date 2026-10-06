@@ -44,10 +44,9 @@ const apiLimiter = rateLimit({
 app.use('/api/', apiLimiter);
 
 // Serve Static Frontend Assets (Phase 14 UI/UX Refinement)
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-if (path.join(__dirname, '..', 'frontend')) {
-    app.use(express.static(path.join(__dirname, '..', 'frontend')));
-}
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -71,7 +70,14 @@ app.get('/api/health', (req, res) => {
 // SPA Fallback for client-side routing
 app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api/')) return next();
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    const fs = require('fs');
+    const publicIndex = path.join(__dirname, '..', 'public', 'index.html');
+    const localPublicIndex = path.join(__dirname, 'public', 'index.html');
+    const frontendIndex = path.join(__dirname, '..', 'frontend', 'index.html');
+    if (fs.existsSync(publicIndex)) return res.sendFile(publicIndex);
+    if (fs.existsSync(localPublicIndex)) return res.sendFile(localPublicIndex);
+    if (fs.existsSync(frontendIndex)) return res.sendFile(frontendIndex);
+    res.status(404).send('Not Found');
 });
 
 // 404 Handler for undefined API routes

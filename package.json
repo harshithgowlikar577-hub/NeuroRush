@@ -4,10 +4,20 @@
   "description": "NeuroRush — Cognitive Performance Platform",
   "main": "backend/server.js",
   "scripts": {
+    "build": "node -e \"const fs=require('fs'); if(fs.existsSync('frontend')) { fs.cpSync('frontend', 'public', {recursive: true}); }\"",
     "start": "node backend/server.js",
     "dev": "node backend/server.js",
     "install:backend": "npm install --prefix backend",
     "postinstall": "npm install --prefix backend"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0"
   },
   "keywords": [
     "neurorush",
